@@ -1,0 +1,19 @@
+.items {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  text-decoration: none;
+}
+
+.item {
+  padding: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: #000;
+}
+
+.active {
+  color: red;
+}
