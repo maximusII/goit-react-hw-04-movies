@@ -1,0 +1,68 @@
+import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
+import {
+  fetchMovieWithId,
+  fetchMovieCast,
+  fetchMovieReview
+} from "../../../../services/fetcher";
+import styles from "./MovieDetailsPage.module.css";
+import Movie from "../Movie/Movie";
+import Cast from "./Cast/Cast";
+import Review from "./Reviews/Reviews";
+
+class MovieDetailsPage extends Component {
+  state = { movie: null, cast: [], review: [] };
+
+  componentDidMount() {
+    fetchMovieWithId(this.props.match.params.movieId)
+      .then(alldata => alldata.data)
+      .then(movie => this.setState({ movie }));
+
+    fetchMovieCast(this.props.match.params.movieId)
+      .then(alldata => alldata.data)
+      .then(data => data.cast)
+      .then(cast => this.setState({ cast }));
+
+    fetchMovieReview(this.props.match.params.movieId)
+      .then(alldata => alldata.data)
+      .then(data => data.results)
+      .then(review => this.setState({ review }));
+  }
+
+  render() {
+    const { movie, cast, review } = this.state;
+    const { match } = this.props;
+    const WrappedCast = function(props) {
+      return <Cast {...props} cast={cast} />;
+    };
+    const WrappedReview = function(props) {
+      return <Review {...props} review={review} />;
+    };
+
+    return (
+      <div>
+        <button type="button" className={styles.backButton}>
+          Go back
+        </button>
+        {movie && <Movie {...movie} />}
+        <h3 className={styles.addInfo}>Additional information </h3>
+        <Link
+          to={`/movies/${match.params.movieId}/cast`}
+          className={styles.cast}
+        >
+          Cast
+        </Link>
+        <Route path="/movies/:movieId/cast" component={WrappedCast} />
+        <Link
+          to={`/movies/${match.params.movieId}/review`}
+          className={styles.review}
+        >
+          Review
+        </Link>
+        <Route path="/movies/:movieId/review" component={WrappedReview} />
+      </div>
+    );
+  }
+}
+
+export default MovieDetailsPage;

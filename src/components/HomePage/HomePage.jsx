@@ -3,12 +3,6 @@ import styles from "./HomePage.module.css";
 import { fetchMovies } from "../../services/fetcher";
 import MoviesList from "../MoviesPage/MoviesList/MoviesList";
 
-// const HomePage = () => {
-//   return <h1>Home</h1>;
-// };
-
-// export default HomePage;
-
 class HomePage extends Component {
   state = { movies: [] };
 
@@ -23,7 +17,7 @@ class HomePage extends Component {
     const { movies } = this.state;
     return (
       <div>
-        <h1>Home</h1>
+        <h1 className={styles.title}>Home</h1>
         <MoviesList movies={movies} />
       </div>
     );

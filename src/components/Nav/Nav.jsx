@@ -11,7 +11,7 @@ const Nav = () => (
         className={styles.link}
         activeClassName={styles.active}
       >
-        Home
+        <b>Home</b>
       </NavLink>
     </li>
     <li className={styles.item}>
@@ -20,7 +20,7 @@ const Nav = () => (
         className={styles.link}
         activeClassName={styles.active}
       >
-        Movies
+        <b>Movies</b>
       </NavLink>
     </li>
   </ul>

@@ -13,7 +13,12 @@ export const fetchMovieWithId = id =>
     `https://api.themoviedb.org/3/movie/${id}?${options.API_KEY}&language=en-US`
   );
 
-// export const fetchMovieImagesWithId = id =>
-//   axios.get(
-//     `https://api.themoviedb.org/3/movie/${id}/images?${options.API_KEY}`
-//   );
+export const fetchMovieCast = id =>
+  axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/credits?${options.API_KEY}&language=en-US`
+  );
+
+export const fetchMovieReview = id =>
+  axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/reviews?${options.API_KEY}&language=en-US&page=1`
+  );

@@ -5,7 +5,7 @@ import Nav from "./Nav/Nav";
 import HomePage from "./HomePage/HomePage";
 import MoviesPage from "./MoviesPage/MoviesPage";
 // import NotFoundPage from "./NotFoundPage/NotFoundPage";
-import MovieDetailsPage from "./MoviesPage/MovieDetailsPage/MovieDetailsPage";
+import MovieDetailsPage from "./MoviesPage/MoviesList/MovieDetailsPage/MovieDetailsPage";
 
 function App() {
   return (
