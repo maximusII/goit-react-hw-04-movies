@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./Movie.module.css";
 
 const Movie = ({
@@ -30,6 +31,21 @@ const Movie = ({
       </p>
     </article>
   );
+};
+
+Movie.propTypes = {
+  overview: PropTypes.string.isRequired,
+  genres: PropTypes.array.isRequired,
+  name: PropTypes.string,
+  title: PropTypes.string,
+  poster_path: PropTypes.string.isRequired,
+  release_date: PropTypes.string.isRequired,
+  vote_average: PropTypes.number.isRequired
+};
+
+Movie.defaultProps = {
+  name: "",
+  title: ""
 };
 
 export default Movie;

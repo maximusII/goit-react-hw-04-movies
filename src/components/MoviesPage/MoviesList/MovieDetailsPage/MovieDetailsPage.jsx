@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   fetchMovieWithId,
   fetchMovieCast,
@@ -29,6 +30,14 @@ class MovieDetailsPage extends Component {
       .then(review => this.setState({ review }));
   }
 
+  handleGoback = () => {
+    const { history, location } = this.props;
+    if (location.state) {
+      return history.push(location.state.from);
+    }
+    history.push("/movies");
+  };
+
   render() {
     const { movie, cast, review } = this.state;
     const { match } = this.props;
@@ -41,7 +50,11 @@ class MovieDetailsPage extends Component {
 
     return (
       <div>
-        <button type="button" className={styles.backButton}>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={this.handleGoback}
+        >
           Go back
         </button>
         {movie && <Movie {...movie} />}
@@ -64,5 +77,9 @@ class MovieDetailsPage extends Component {
     );
   }
 }
+
+MovieDetailsPage.propTypes = {
+  match: PropTypes.object.isRequired
+};
 
 export default MovieDetailsPage;
