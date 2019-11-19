@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styles from "./Reviews.module.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './Reviews.module.css';
 
-const Reviews = ({ review }) => {
+const Reviews = ({ review, location }) => {
   return (
     <ul className={styles.page}>
       {review.map(el => (
@@ -16,7 +16,7 @@ const Reviews = ({ review }) => {
 };
 
 Reviews.propTypes = {
-  review: PropTypes.array.isRequired
+  review: PropTypes.array.isRequired,
 };
 
 export default Reviews;

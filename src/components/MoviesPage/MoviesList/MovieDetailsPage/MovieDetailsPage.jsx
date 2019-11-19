@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { Route, Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   fetchMovieWithId,
   fetchMovieCast,
-  fetchMovieReview
-} from "../../../../services/fetcher";
-import styles from "./MovieDetailsPage.module.css";
-import Movie from "../Movie/Movie";
-import Cast from "./Cast/Cast";
-import Review from "./Reviews/Reviews";
+  fetchMovieReview,
+} from '../../../../services/fetcher';
+import styles from './MovieDetailsPage.module.css';
+import Movie from '../Movie/Movie';
+import Cast from './Cast/Cast';
+import Review from './Reviews/Reviews';
 
 class MovieDetailsPage extends Component {
   state = { movie: null, cast: [], review: [] };
@@ -35,7 +35,8 @@ class MovieDetailsPage extends Component {
     if (location.state) {
       return history.push(location.state.from);
     }
-    history.push("/movies");
+
+    history.push('/movies');
   };
 
   render() {
@@ -60,14 +61,20 @@ class MovieDetailsPage extends Component {
         {movie && <Movie {...movie} />}
         <h3 className={styles.addInfo}>Additional information </h3>
         <Link
-          to={`/movies/${match.params.movieId}/cast`}
+          to={{
+            pathname: `/movies/${match.params.movieId}/cast`,
+            state: { from: this.props.location },
+          }}
           className={styles.cast}
         >
           Cast
         </Link>
         <Route path="/movies/:movieId/cast" component={WrappedCast} />
         <Link
-          to={`/movies/${match.params.movieId}/review`}
+          to={{
+            pathname: `/movies/${match.params.movieId}/review`,
+            state: { from: this.props.location },
+          }}
           className={styles.review}
         >
           Review
@@ -79,7 +86,7 @@ class MovieDetailsPage extends Component {
 }
 
 MovieDetailsPage.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
-export default MovieDetailsPage;
+export default withRouter(MovieDetailsPage);
