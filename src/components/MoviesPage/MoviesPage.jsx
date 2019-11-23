@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { fetchSearchMovie } from '../../services/fetcher';
 import MoviesList from './MoviesList/MoviesList';
-// import styles from "./MoviesPage.module.css";
 
 class MoviesPage extends Component {
   state = { query: '', movies: [] };
+
+  componentDidMount() {
+    const { search } = this.props.location;
+    if (search) {
+      fetchSearchMovie(search.slice(7))
+        .then(alldata => alldata.data)
+        .then(data => data.results)
+        .then(movies => this.setState({ movies }));
+    }
+  }
 
   handleChange = e => {
     this.setState({
@@ -14,16 +23,24 @@ class MoviesPage extends Component {
   };
 
   handleSubmit = e => {
+    const { query } = this.state;
+    const { location, history } = this.props;
     e.preventDefault();
     this.setState({ query: '' });
-    fetchSearchMovie(this.state.query)
+    fetchSearchMovie(query)
       .then(alldata => alldata.data)
       .then(data => data.results)
       .then(movies => this.setState({ movies }));
+
+    history.push({
+      ...location,
+      search: `query=${query}`,
+    });
   };
 
   render() {
     const { query, movies } = this.state;
+
     return (
       <>
         <form onSubmit={this.handleSubmit}>

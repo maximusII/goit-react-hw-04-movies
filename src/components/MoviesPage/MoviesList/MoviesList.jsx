@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import styles from "./MoviesList.module.css";
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import styles from './MoviesList.module.css';
 
 const MoviesList = ({ movies = [], location }) => (
   <ul className={styles.items}>
@@ -10,7 +10,7 @@ const MoviesList = ({ movies = [], location }) => (
         <Link
           to={{
             pathname: `/movies/${movie.id}`,
-            state: { from: location }
+            state: { from: location },
           }}
         >
           {movie.name ? movie.name : movie.title}
@@ -22,7 +22,7 @@ const MoviesList = ({ movies = [], location }) => (
 
 MoviesList.propTypes = {
   movies: PropTypes.array.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(MoviesList);

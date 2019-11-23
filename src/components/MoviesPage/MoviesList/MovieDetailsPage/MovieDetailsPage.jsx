@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   fetchMovieWithId,
@@ -12,36 +12,42 @@ import Cast from './Cast/Cast';
 import Review from './Reviews/Reviews';
 
 class MovieDetailsPage extends Component {
-  state = { movie: null, cast: [], review: [] };
+  state = { search: null, movie: null, cast: [], review: [] };
 
   componentDidMount() {
-    fetchMovieWithId(this.props.match.params.movieId)
+    const { movieId } = this.props.match.params;
+    const { search } = this.props.location.state.from;
+    fetchMovieWithId(movieId)
       .then(alldata => alldata.data)
       .then(movie => this.setState({ movie }));
 
-    fetchMovieCast(this.props.match.params.movieId)
+    fetchMovieCast(movieId)
       .then(alldata => alldata.data)
       .then(data => data.cast)
       .then(cast => this.setState({ cast }));
 
-    fetchMovieReview(this.props.match.params.movieId)
+    fetchMovieReview(movieId)
       .then(alldata => alldata.data)
       .then(data => data.results)
       .then(review => this.setState({ review }));
+
+    this.setState({ search: search });
   }
 
   handleGoback = () => {
-    const { history, location } = this.props;
-    if (location.state) {
-      return history.push(location.state.from);
+    const { history } = this.props;
+    const { search } = this.state;
+
+    if (search) {
+      return history.push(`/movies${search}`);
     }
 
-    history.push('/movies');
+    return history.push('/');
   };
 
   render() {
-    const { movie, cast, review } = this.state;
-    const { match } = this.props;
+    const { movie, cast, review, search } = this.state;
+    const { match, location } = this.props;
     const WrappedCast = function(props) {
       return <Cast {...props} cast={cast} />;
     };
@@ -63,7 +69,9 @@ class MovieDetailsPage extends Component {
         <Link
           to={{
             pathname: `/movies/${match.params.movieId}/cast`,
-            state: { from: this.props.location },
+            state: {
+              from: { ...location, search: search },
+            },
           }}
           className={styles.cast}
         >
@@ -73,7 +81,9 @@ class MovieDetailsPage extends Component {
         <Link
           to={{
             pathname: `/movies/${match.params.movieId}/review`,
-            state: { from: this.props.location },
+            state: {
+              from: { ...location, search: search },
+            },
           }}
           className={styles.review}
         >
@@ -89,4 +99,4 @@ MovieDetailsPage.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default withRouter(MovieDetailsPage);
+export default MovieDetailsPage;

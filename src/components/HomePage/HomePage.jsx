@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import styles from "./HomePage.module.css";
-import { fetchMovies } from "../../services/fetcher";
-import MoviesList from "../MoviesPage/MoviesList/MoviesList";
+import React, { Component } from 'react';
+import styles from './HomePage.module.css';
+import { fetchMovies } from '../../services/fetcher';
+import MoviesList from '../MoviesPage/MoviesList/MoviesList';
 
 class HomePage extends Component {
   state = { movies: [] };
@@ -17,7 +17,7 @@ class HomePage extends Component {
     const { movies } = this.state;
     return (
       <div>
-        <h1 className={styles.title}>Home</h1>
+        <h1 className={styles.title}>Trending today</h1>
         <MoviesList movies={movies} />
       </div>
     );
