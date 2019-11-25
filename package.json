@@ -18,10 +18,9 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "lint:format": "prettier src/**/*.{js,css,json} --write",
-    "deploy": "gh-pages -d build",
+    "deploy": "mv build/index.html build/200.html && surge -p build",
     "predeploy": "npm run build"
   },
-  "homepage": "https://github.com/maximusII/goit-react-hw-04-movies",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -46,6 +45,7 @@
     "eslint-plugin-react": "^7.16.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.4.3",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "surge": "^0.21.3"
   }
 }

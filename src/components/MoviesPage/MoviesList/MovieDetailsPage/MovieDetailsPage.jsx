@@ -15,8 +15,11 @@ class MovieDetailsPage extends Component {
   state = { search: null, movie: null, cast: [], review: [] };
 
   componentDidMount() {
+    console.log(this.props.location);
     const { movieId } = this.props.match.params;
-    const { search } = this.props.location.state.from;
+    const search = this.props.location.state
+      ? this.props.location.state.from.search
+      : '';
     fetchMovieWithId(movieId)
       .then(alldata => alldata.data)
       .then(movie => this.setState({ movie }));
